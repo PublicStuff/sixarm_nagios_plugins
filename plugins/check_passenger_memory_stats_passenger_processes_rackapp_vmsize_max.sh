@@ -100,6 +100,10 @@ get_vals
 do_output
 do_perfdata
 
-echo "OK - ${output} | ${perfdata}"
+if (( $(bc -l <<<"${passenger_memory_stats_passenger_processes_rackapp_vmsize_max} > 1200") )); then
+        echo "CRITICAL - ${output} | ${perfdata}"
+else
+        echo "OK - ${output} | ${perfdata}"
+fi
 exit $ST_OK
 
