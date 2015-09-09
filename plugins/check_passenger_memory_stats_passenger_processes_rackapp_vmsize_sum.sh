@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -100,6 +100,11 @@ get_vals
 do_output
 do_perfdata
 
-echo "OK - ${output} | ${perfdata}"
+if (( $(bc -l <<<"${passenger_memory_stats_passenger_processes_rackapp_vmsize_sum} > 5200") )); then
+        echo "CRITICAL - ${output} | ${perfdata}"
+else
+        echo "OK - ${output} | ${perfdata}"
+fi
+
 exit $ST_OK
 
